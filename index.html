@@ -1,0 +1,135 @@
+<!--https://www.youtube.com/watch?v=PxFbHn4FWjQ&list=PLMlifxDLpB1CAtLxKmIE5FfGZkNx5K5XX&pp=iAQB-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Макет игры в крестики-нолики</title>
+    <style>
+        /* Основные стили */
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Общий контейнер игры */
+        .game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 180px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Информация о ходе */
+        .game-info {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Игровое поле */
+        .game-field {
+            display: grid;
+            grid-template-columns: repeat(3, 30px);
+            grid-template-rows: repeat(3, 30px);
+            padding: 1px 0 0 1px;
+        }
+
+        /* Кнопки ячеек */
+        .cell {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #333;
+            transition: background 0.3s;
+        }
+
+        /* Стили для крестиков и ноликов */
+        .symbol {
+            display: inline-block;
+            font-size: 1.2em;
+        }
+
+        .symbol--x {
+            color: red;
+        }
+
+        .symbol--o {
+            color: green;
+        }
+
+        /* Победные ячейки */
+        .cell--win {
+            background-color: #ffe680;
+        }
+
+        /* Стили ячейки при наведении */
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+
+  const SYMBOL_X = 'X'
+  const SYMBOL_O = 'O'
+
+  function App() {
+    const cells = [null, null, null, SYMBOL_O, SYMBOL_X, SYMBOL_O, null, null, null,]
+
+    const currentStep = SYMBOL_X
+
+    const getSymbolClassName = (symbol) => {
+      return symbol === SYMBOL_X
+        ? 'symbol--x'
+        : 'symbol--o'
+    }
+
+    const renderSymbol = (symbol) => {
+      return <span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
+    }
+
+    // return <div>Hello world</div>
+    return (
+      <div className="game">
+        <div className="game-info">
+
+          {//Ход: <span className={`symbol ${getSymbolClassName(currentStep)}`}>{currentStep}</span>
+          }
+          Ход: {renderSymbol(currentStep)}
+        </div>
+        <div className="game-field">
+          {cells.map((cell,i) => {
+            return <button key={i} className="cell">{
+              cell
+                ? renderSymbol(cell)
+                : null
+            }</button>
+          })}
+        </div>
+      </div>
+    )
+  }
+
+
+  const root = ReactDOM.createRoot(document.getElementById('root'))
+  root.render(<App/>)
+</script>
+</body>
+</html>
